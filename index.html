@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SHOP_TA1 | اطلب الآن - فاتورة الدفع الفورية</title>
+    <!-- Google Fonts Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #e0eefc 0%, #cadef0 100%);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        /* خلفية متحركة شفافة */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(255,248,225,0.4), rgba(210,230,250,0.2));
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* الكارد الزجاجي الرئيسي */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(14px);
+            border-radius: 56px;
+            box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(255,255,245,0.6);
+            padding: 1.8rem 2rem 2.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 250, 220, 0.7);
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 1rem;
+            }
+            .glass-card {
+                padding: 1.3rem;
+                border-radius: 36px;
+            }
+        }
+
+        /* رأس المتجر خرافي */
+        .header-shop {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo-circle {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 0.4rem 1.8rem;
+            border-radius: 100px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,215,140,0.8);
+        }
+        .logo-circle i {
+            font-size: 2.2rem;
+            color: #ffcd7e;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        .logo-circle span {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #15262e, #2c4a5c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #1a3a48, #235b6e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .subtitle {
+            background: rgba(255,250,210,0.5);
+            display: inline-block;
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 500;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(2px);
+        }
+
+        /* الحقول */
+        .field {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .field label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: rgba(240,248,255,0.6);
+            width: fit-content;
+            padding: 4px 16px;
+            border-radius: 30px;
+            color: #0b404e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid #bbd4ec;
+            border-radius: 44px;
+            padding: 14px 20px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            outline: none;
+            font-weight: 500;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #2d7f9e;
+            box-shadow: 0 0 0 3px rgba(45,127,158,0.2);
+            background: white;
+        }
+        textarea {
+            border-radius: 32px;
+            resize: vertical;
+        }
+
+        /* بطاقات الدفع الثلاثة (فيزا / ماستركارد / آسيا) */
+        .payment-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 12px 0 8px;
+        }
+        .pay-card {
+            flex: 1;
+            min-width: 110px;
+            background: rgba(250,250,252,0.8);
+            border-radius: 44px;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .pay-card input {
+            display: none;
+        }
+        .pay-option-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px 6px;
+            border-radius: 44px;
+            font-weight: 700;
+            color: #1f4d5e;
+            transition: 0.2s;
+            cursor: pointer;
+            background: rgba(255,255,240,0.6);
+        }
+        .pay-card input:checked + .pay-option-label {
+            background: linear-gradient(145deg, #ffffff, #e9f4fe);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05), 0 0 0 2px #276b85;
+            transform: scale(0.97);
+            color: #033b4a;
+        }
+        .pay-option-label i {
+            font-size: 2rem;
+        }
+        .fa-cc-visa { color: #1e4596; }
+        .fa-cc-mastercard { color: #cc6b2c; }
+        .custom-asia-icon { color: #2f6b47; font-size: 1.7rem; }
+
+        /* حقل المبلغ وطريقة الدفع مدمج */
+        .double-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        @media (min-width: 550px) {
+            .double-row {
+                flex-direction: row;
+                gap: 18px;
+            }
+            .double-row > div {
+                flex: 1;
+            }
+        }
+
+        .optional-tag {
+            font-size: 0.7rem;
+            background: #b9d3e6b3;
+            border-radius: 30px;
+            padding: 2px 10px;
+            margin-right: 8px;
+        }
+
+        .info-note {
+            background: rgba(225, 243, 255, 0.7);
+            border-right: 6px solid #007b8f;
+            padding: 14px 18px;
+            border-radius: 28px;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a5f6e;
+        }
+
+        /* زر إصدار الفاتورة ونسخها */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .btn-primary {
+            flex: 2;
+            background: linear-gradient(105deg, #1f6e62, #27947c);
+            border: none;
+            padding: 15px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Tajawal', sans-serif;
+            box-shadow: 0 8px 18px -6px #1a6b5a;
+        }
+        .btn-secondary {
+            flex: 1;
+            background: rgba(30, 50, 60, 0.85);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,210,0.5);
+            padding: 15px;
+            border-radius: 60px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .btn-primary:hover { background: linear-gradient(105deg, #158067, #1d9c82); transform: scale(0.99);}
+        .btn-secondary:hover { background: #1c3f4b; transform: translateY(-2px);}
+
+        /* الفاتورة الناتجة */
+        .invoice-container {
+            margin-top: 25px;
+            background: #fefcf5e6;
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 1.2rem;
+            border: 1px solid #ffe6b3;
+            transition: all 0.2s;
+            display: none;
+        }
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed #c0cfb2;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .invoice-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #254e5c;
+        }
+        .copy-invoice-btn {
+            background: #2c7a66;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        .invoice-content {
+            background: #fffff2;
+            border-radius: 32px;
+            padding: 1rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            direction: ltr;
+            text-align: right;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #1d3e44;
+            font-weight: 500;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #1f2f38e6;
+            backdrop-filter: blur(12px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            z-index: 999;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: #375f6b;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="glass-card">
+        <div class="header-shop">
+            <div class="logo-circle">
+                <i class="fas fa-cart-shopping"></i>
+                <span>SHOP_TA1</span>
+            </div>
+            <h1>📄 إعداد الطلب + فاتورة الدفع</h1>
+            <div class="subtitle"><i class="fas fa-credit-card"></i> فيزا · ماستر كارد · آسيا — وأنشئ فاتورتك بنسخة فورية</div>
+        </div>
+
+        <form id="orderForm">
+            <!-- الاسم -->
+            <div class="field">
+                <label><i class="fas fa-user"></i> 📝 الاسم</label>
+                <input type="text" id="fullName" placeholder="الاسم الكامل" required>
+            </div>
+            <!-- يوزر التواصل -->
+            <div class="field">
+                <label><i class="fab fa-telegram"></i> 📱 يوزر التواصل</label>
+                <input type="text" id="contactUser" placeholder="@username أو واتساب" required>
+            </div>
+            <!-- يوزر اللعبة -->
+            <div class="field">
+                <label><i class="fas fa-dice-d6"></i> 🎮 يوزر اللعبة</label>
+                <input type="text" id="gameUser" placeholder="معرفك داخل اللعبة" required>
+            </div>
+            <!-- نوع الطلب -->
+            <div class="field">
+                <label><i class="fas fa-tags"></i> 🎯 نوع الطلب</label>
+                <select id="requestType" required>
+                    <option value="" disabled selected>-- اختر نوع الطلب --</option>
+                    <option value="حساب جاهز 🔓">حساب جاهز 🔓</option>
+                    <option value="تعبئة رصيد 💎">تعبئة رصيد 💎</option>
+                    <option value="ترقية شخصية 🎖️">ترقية شخصية 🎖️</option>
+                    <option value="هدية / شحن سريع 🎁">هدية / شحن سريع 🎁</option>
+                    <option value="تخصيص حساب (بريد وكلمة مرور) 🔐">تخصيص حساب 🔐 (يتطلب بريد وكلمة مرور)</option>
+                    <option value="اخرى ✨">أخرى ✨</option>
+                </select>
+            </div>
+
+            <!-- المبلغ وطريقة الدفع كتابة -->
+            <div class="field">
+                <label><i class="fas fa-coins"></i> 💰 المبلغ المدفوع وطريقة الدفع</label>
+                <div class="double-row">
+                    <input type="text" id="paidAmount" placeholder="المبلغ: 50$ أو 20 دينار" required>
+                    <input type="text" id="paymentText" placeholder="طريقة الدفع كتابة (اختياري)">
+                </div>
+            </div>
+
+            <!-- ثلاث طرق دفع: فيزا - ماستر كارد - آسيا -->
+            <div class="field">
+                <label><i class="fas fa-credit-card"></i> 💳 اختر طريقة الدفع (فيزا / ماستركارد / آسيا)</label>
+                <div class="payment-cards">
+                    <div class="pay-card">
+                        <input type="radio" name="paymentCard" id="visaOption" value="Visa (فيزا)">
+                        <label for="visaOption" class="pay-option-label"><i class="fab fa-cc-visa fa-2x"></i> فيزا</label>
+                    </div>
+                    <div class="pay-card">
+                        <input type="radio" name="paymentCard" id="masterOption" value="Mastercard (ماستر كارد)">
+                        <label for="masterOption" class="pay-option-label"><i class="fab fa-cc-mastercard fa-2x"></i> ماستركارد</label>
+                    </div>
+                    <div class="pay-card">
+                        <input type="radio" name="paymentCard" id="asiaOption" value="Asia (آسيا كارد)">
+                        <label for="asiaOption" class="pay-option-label"><i class="fas fa-globe-asia custom-asia-icon"></i> آسيا</label>
+                    </div>
+                </div>
+                <div style="font-size:0.7rem; color:#3f6675; margin-right:12px;"><i class="fas fa-check-circle"></i> اختر إحدى البطاقات لتظهر في الفاتورة</div>
+            </div>
+
+            <!-- البريد الإلكتروني اختياري -->
+            <div class="field">
+                <label><i class="fas fa-envelope-open-text"></i> 📧 البريد الإلكتروني <span class="optional-tag">اختياري</span></label>
+                <input type="email" id="email" placeholder="بريدك الإلكتروني (حسب نوع الطلب)">
+            </div>
+            <!-- كلمة المرور اختيارية -->
+            <div class="field">
+                <label><i class="fas fa-key"></i> 🔒 كلمة المرور <span class="optional-tag">اختياري</span></label>
+                <input type="text" id="password" placeholder="كلمة المرور إن وجدت (تغيير بعد الاستلام)">
+            </div>
+            <!-- ملاحظات -->
+            <div class="field">
+                <label><i class="fas fa-pencil-alt"></i> 📌 ملاحظات</label>
+                <textarea rows="2" id="notes" placeholder="تفاصيل إضافية، أو تنبيه بخصوص البريد وكلمة المرور"></textarea>
+            </div>
+
+            <div class="info-note">
+                <i class="fas fa-lightbulb"></i> 💡 ملاحظة: البريد وكلمة المرور فقط إذا كان نوع الطلب يتطلبهم. يمكنك تغيير بيانات الحساب بعد الاستلام. الدعم متاح عبر يوزر التواصل.
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-primary" id="generateInvoiceBtn"><i class="fas fa-file-invoice"></i> إنشاء الفاتورة + إرسال الطلب</button>
+                <button type="button" class="btn-secondary" id="copyInvoiceBtn"><i class="fas fa-copy"></i> نسخ الفاتورة</button>
+            </div>
+        </form>
+
+        <!-- منطقة الفاتورة -->
+        <div id="invoiceArea" class="invoice-container">
+            <div class="invoice-header">
+                <div class="invoice-title"><i class="fas fa-receipt"></i> فاتورة SHOP_TA1</div>
+                <button class="copy-invoice-btn" id="quickCopyInvoiceBtn"><i class="fas fa-copy"></i> نسخ الفاتورة</button>
+            </div>
+            <div id="invoiceText" class="invoice-content">
+                <!-- سيتم عرض الفاتورة هنا -->
+            </div>
+        </div>
+        <footer>
+            <i class="fas fa-shield-heart"></i> آمن وموثوق | طلبك يصل فوراً مع إمكانية نسخ الفاتورة
+        </footer>
+    </div>
+</div>
+
+<script>
+    (function(){
+        // عناصر الإدخال
+        const fullName = document.getElementById('fullName');
+        const contactUser = document.getElementById('contactUser');
+        const gameUser = document.getElementById('gameUser');
+        const requestType = document.getElementById('requestType');
+        const paidAmount = document.getElementById('paidAmount');
+        const paymentText = document.getElementById('paymentText');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const notes = document.getElementById('notes');
+        // راديو البطاقات
+        const visaRadio = document.getElementById('visaOption');
+        const masterRadio = document.getElementById('masterOption');
+        const asiaRadio = document.getElementById('asiaOption');
+        // أزرار الفاتورة
+        const generateBtn = document.getElementById('generateInvoiceBtn');
+        const copyInvoiceBtn = document.getElementById('copyInvoiceBtn');
+        const quickCopyBtn = document.getElementById('quickCopyInvoiceBtn');
+        const invoiceContainer = document.getElementById('invoiceArea');
+        const invoiceTextDiv = document.getElementById('invoiceText');
+
+        let lastInvoiceRaw = "";
+
+        // دالة لجمع طريقة الدفع المختارة من البطاقات + النص التكميلي
+        function getSelectedCardMethod() {
+            if(visaRadio.checked) return visaRadio.value;
+            if(masterRadio.checked) return masterRadio.value;
+            if(asiaRadio.checked) return asiaRadio.value;
+            return "لم يتم اختيار بطاقة";
+        }
+
+        // بناء نص الفاتورة كاملاً (وبنفس الوقت بناء الطلب)
+        function buildFullInvoice() {
+            const name = fullName.value.trim() || "غير مدخل";
+            const contact = contactUser.value.trim() || "غير مدخل";
+            const game = gameUser.value.trim() || "غير مدخل";
+            const type = requestType.value || "غير محدد";
+            const amount = paidAmount.value.trim() || "غير محدد";
+            const manualPaymentText = paymentText.value.trim();
+            const selectedCard = getSelectedCardMethod();
+            let paymentLine = "";
+            if(manualPaymentText && selectedCard !== "لم يتم اختيار بطاقة") {
+                paymentLine = `${amount} | الدفع: ${selectedCard} + (${manualPaymentText})`;
+            } else if(selectedCard !== "لم يتم اختيار بطاقة") {
+                paymentLine = `${amount} | الدفع: ${selectedCard}`;
+            } else if(manualPaymentText) {
+                paymentLine = `${amount} | طريقة الدفع: ${manualPaymentText}`;
+            } else {
+                paymentLine = `${amount} | طريقة الدفع: غير محدد`;
+            }
+            const emailVal = email.value.trim() || "(اختياري - لم يقدم)";
+            const passVal = password.value.trim() || "(اختياري - لم يقدم)";
+            const notesVal = notes.value.trim() || "لا توجد ملاحظات إضافية";
+
+            // بناء رسالة الطلب كما هو مطلوب بالضبط
+            let invoice = `🛍️ SHOP_TA1 - طلب سريع من\n`;
+            invoice += `━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            invoice += `📝 الاسم: ${name}\n`;
+            invoice += `📱 يوزر التواصل: ${contact}\n`;
+            invoice += `🎮 يوزر اللعبة: ${game}\n`;
+            invoice += `🎯 نوع الطلب: ${type}\n`;
+            invoice += `💰 المبلغ المدفوع وطريقة الدفع كتابة او اختيار : ${paymentLine}\n`;
+            invoice += `📧 البريد الإلكتروني: ${emailVal}\n`;
+            invoice += `🔒 كلمة المرور: ${passVal}\n`;
+            invoice += `📌 ملاحظات: ${notesVal}\n`;
+            invoice += `━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            invoice += `💡 ملاحظة: البريد وكلمة المرور فقط إذا كان نوع الطلب يتطلبهم.\n✨ أرسلها لي وسيتم إضافة طلبك تلقائياً!\n`;
+            invoice += `━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            invoice += `🔖 طريقة الدفع بالبطاقة: ${selectedCard} `;
+            if(selectedCard !== "لم يتم اختيار بطاقة") invoice += `✅`;
+            invoice += `\n📅 تاريخ الفاتورة: ${new Date().toLocaleString('ar-EG')}`;
+            return invoice;
+        }
+
+        // دالة التحقق من الحقول الأساسية + شرط البريد اذا تطلب
+        function validateForm() {
+            if(!fullName.value.trim()){ alert("يرجى كتابة الاسم"); fullName.focus(); return false;}
+            if(!contactUser.value.trim()){ alert("يرجى إدخال يوزر التواصل"); contactUser.focus(); return false;}
+            if(!gameUser.value.trim()){ alert("يرجى إدخال يوزر اللعبة"); gameUser.focus(); return false;}
+            if(!requestType.value){ alert("اختر نوع الطلب"); requestType.focus(); return false;}
+            if(!paidAmount.value.trim()){ alert("أدخل المبلغ المدفوع"); paidAmount.focus(); return false;}
+
+            const typeNeeds = requestType.value;
+            const emailVal = email.value.trim();
+            const passVal = password.value.trim();
+            if((typeNeeds.includes("تخصيص حساب") || typeNeeds.includes("حساب جاهز")) && (typeNeeds !== "هدية / شحن سريع 🎁")){
+                if(!emailVal && !passVal){
+                    if(!confirm("⚠️ نوع الطلب قد يتطلب بريدًا وكلمة مرور. هل تريد المتابعة بدون إدخالها؟")){
+                        return false;
+                    }
+                } else if(!emailVal){
+                    if(!confirm("⚠️ البريد الإلكتروني قد يكون ضرورياً لتسليم الحساب. هل تريد المتابعة؟")) return false;
+                }
+            }
+            return true;
+        }
+
+        // عرض الفاتورة
+        function showInvoiceAndStore() {
+            if(!validateForm()) return;
+            const invoiceContent = buildFullInvoice();
+            lastInvoiceRaw = invoiceContent;
+            invoiceTextDiv.innerText = invoiceContent;
+            invoiceContainer.style.display = "block";
+            // تمرير سلس
+            invoiceContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // إظهار رسالة منبثقة صغيرة
+            showToast("✅ تم إنشاء الفاتورة بنجاح! يمكنك نسخها الآن.");
+            // تسجيل في الكونسول لمحاكاة الإرسال التلقائي
+            console.log("الطلب المرسل:\n", invoiceContent);
+        }
+
+        // نسخ الفاتورة إلى الحافظة
+        function copyInvoiceToClipboard() {
+            if(!lastInvoiceRaw){
+                if(invoiceTextDiv.innerText.trim() === "" || invoiceContainer.style.display !== "block"){
+                    alert("❌ لا توجد فاتورة لعرضها. قم بإنشاء فاتورة أولاً.");
+                    return;
+                } else {
+                    lastInvoiceRaw = invoiceTextDiv.innerText;
+                }
+            }
+            const textToCopy = lastInvoiceRaw;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast("📋 تم نسخ الفاتورة بنجاح! أرسلها الآن.");
+            }).catch(() => {
+                alert("تعذر النسخ، قم بنسخها يدويًا");
+            });
+        }
+
+        function showToast(msg) {
+            let toast = document.querySelector('.toast-msg');
+            if(toast) toast.remove();
+            let div = document.createElement('div');
+            div.className = 'toast-msg';
+            div.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
+            document.body.appendChild(div);
+            setTimeout(() => { div.style.opacity = '0'; setTimeout(()=> div.remove(), 800); }, 2300);
+        }
+
+        // ربط الأحداث
+        generateBtn.addEventListener('click', showInvoiceAndStore);
+        copyInvoiceBtn.addEventListener('click', copyInvoiceToClipboard);
+        quickCopyBtn.addEventListener('click', copyInvoiceToClipboard);
+
+        // عند اختيار بطاقة نعطي تلميح مكتوب في حقل الدفع الكتابي اختيارياً
+        function autoFillPaymentHint() {
+            let selected = "";
+            if(visaRadio.checked) selected = "فيزا";
+            else if(masterRadio.checked) selected = "ماستركارد";
+            else if(asiaRadio.checked) selected = "آسيا كارد";
+            if(selected && !paymentText.value.trim()){
+                paymentText.value = `دفع عبر ${selected}`;
+            }
+        }
+        visaRadio.addEventListener('change', autoFillPaymentHint);
+        masterRadio.addEventListener('change', autoFillPaymentHint);
+        asiaRadio.addEventListener('change', autoFillPaymentHint);
+        
+        // تحسين: إظهار الفاتورة بشكل تلقائي عند أول زر 
+        // إضافة تأثيرات جمالية
+    })();
+</script>
+</body>
+</html>
